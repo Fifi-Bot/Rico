@@ -30,6 +30,8 @@ import discord
 from discord.ext import commands
 from startServer import FifiServer
 
+TOKEN = ...
+
 intents = discord.Intents.all()
 bot = commands.Bot(command_prefix = 'r.', intents=intents, help_command=commands.MinimalHelpCommand(), activity=discord.Activity(type = discord.ActivityType.playing, name = 'r.help | Helping the Server | https://discord.gg/3c5kc8M'), owner_ids=[621266489596444672, 699839134709317642, 737478714048380939], case_insensitive=True)
 
@@ -50,8 +52,14 @@ async def on_guild_join(guild): #To block guilds from joining
 
 server = FifiServer(bot)
 
-bot.load_extension('cogs.music')
+extensions = [
+    'cogs.music',
+    'cogs.owner'
+]
+
+for ext in extensions:
+    bot.load_extension(ext)
 
 server.start()
 
-bot.run("ODMyMTQxNDcwODIzNjEyNDU3.YHfeIw.fRxb-G_Kd8OddMHRizFzGRY6S3Y")
+bot.run(TOKEN)
